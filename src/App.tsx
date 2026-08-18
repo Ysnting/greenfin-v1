@@ -16,8 +16,12 @@ import FarmerSettingsPage from "./pages/farmer/farmer_app/farmer_settings/farmer
 import BankPage from "./pages/bank/bank_app/bank_page";
 import BankDashboard from "./pages/bank/bank_app/bank_dashboard/bank_dashboard";
 
-
-
+import BankCasesPage
+  from "./pages/bank/bank_app/bank_cases/bank_cases_page";
+  import BankCaseDetailPage
+  from "./pages/bank/bank_app/bank_cases/bank_case_detail_page";
+  import BankRequestsPage from "./pages/bank/bank_app/bank_requests/bank_requests_page";
+import { BankRequestProvider,} from "./pages/bank/bank_context/BankRequestContext";
 function App() {
   return (
     <BrowserRouter>
@@ -87,15 +91,33 @@ function App() {
 
         {/* Bank */}
         <Route
-          path="/bank"
-          element={<BankPage />}
-        />
+    path="/bank/*"
+    element={
+      <BankRequestProvider>
+        <Routes>
+          <Route
+            index
+            element={<BankPage />}
+          />
 
-        <Route
-          path="/bank/dashboard"
-          element={<BankDashboard />}
-        />
+          <Route
+            path="cases"
+            element={<BankCasesPage />}
+          />
 
+          <Route
+            path="cases/:id"
+            element={<BankCaseDetailPage />}
+          />
+
+          <Route
+            path="requests"
+            element={<BankRequestsPage />}
+          />
+        </Routes>
+      </BankRequestProvider>
+    }
+  />
 
       </Routes>
 
@@ -105,6 +127,3 @@ function App() {
 }
 
 export default App;
-
-
-
